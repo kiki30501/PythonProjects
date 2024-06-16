@@ -105,32 +105,32 @@ def not_in_bounds(point):
     # Check if a point is out of bounds
     return point[0] < 0 or point[0] >= S or point[1] < 0 or point[1] >= S
 
-# def wave_search(wave, point, distance, finish):
-#     # A recursive function to expand the wave and search for the shortest path to the finish
-#     if point == finish:
-#         finish_found.set()
-#         return (point,)
-#     if not_in_bounds(point):
-#         return None
-#     if is_occupied(point, wave) and distance != 0:
-#         return None
-#     wave[point] = distance
-#     with cf.ThreadPoolExecutor() as executor:
-#         futures = []
-#         for pattern in search_pattern:
-#             futures.append(executor.submit(wave_search, wave, ((point[0]+pattern[0]), (point[1]+pattern[1]), point[2]), distance + 1, finish))
-#             futures.append(executor.submit(wave_search, wave, ((point[0]), (point[1]), point[2] ^ 1), distance + 1, finish))
-#         for future in cf.as_completed(futures):
-#             result = future.result()
-#             if result is not None:
-#                 board[point] = 1
-#                 return (point,) + result
-#         # future = 
-#         # result = future.result()
-#         # if result is not None:
-#         #     board[point] = 1
-#         #     return (point,) + result
-#     return None
+def wave_search(wave, point, distance, finish):
+    # A recursive function to expand the wave and search for the shortest path to the finish
+    if point == finish:
+        finish_found.set()
+        return (point,)
+    if not_in_bounds(point):
+        return None
+    if is_occupied(point, wave) and distance != 0:
+        return None
+    wave[point] = distance
+    with cf.ThreadPoolExecutor() as executor:
+        futures = []
+        for pattern in search_pattern:
+            futures.append(executor.submit(wave_search, wave, ((point[0]+pattern[0]), (point[1]+pattern[1]), point[2]), distance + 1, finish))
+            futures.append(executor.submit(wave_search, wave, ((point[0]), (point[1]), point[2] ^ 1), distance + 1, finish))
+        for future in cf.as_completed(futures):
+            result = future.result()
+            if result is not None:
+                board[point] = 1
+                return (point,) + result
+        # future = 
+        # result = future.result()
+        # if result is not None:
+        #     board[point] = 1
+        #     return (point,) + result
+    return None
 
 
 
@@ -159,30 +159,30 @@ def not_in_bounds(point):
 #             paths[next_point] = paths[point] + [next_point]  # Save the path to the next point
 
 #     return None
-from collections import deque
+# from collections import deque
 
-def wave_search(wave, start, finish):
-    queue = deque([start])  # Initialize the queue with the start point
-    wave[start] = 0  # Assign the distance of the start point as 0
+# def wave_search(wave, start, finish):
+#     queue = deque([start])  # Initialize the queue with the start point
+#     wave[start] = 0  # Assign the distance of the start point as 0
 
-    while queue:
-        point = queue.popleft()  # Pop the point from the front of the queue
+#     while queue:
+#         point = queue.popleft()  # Pop the point from the front of the queue
 
-        if point == finish:
-            return wave[point]  # Return the distance to the finish point
+#         if point == finish:
+#             return wave[point]  # Return the distance to the finish point
 
-        if (not_in_bounds(point) or is_occupied(point, wave)) and wave[point] != 0:
-            continue
+#         if (not_in_bounds(point) or is_occupied(point, wave)) and wave[point] != 0:
+#             continue
 
-        for pattern in search_pattern:
-            next_point = ((point[0]+pattern[0]), (point[1]+pattern[1]), point[2]^pattern[2])
-            if not_in_bounds(next_point) or is_occupied(next_point, wave):
-                continue
-            if wave[next_point] == -1:  # If the next point has not been visited
-                queue.append(next_point)
-                wave[next_point] = wave[point] + 1  # Assign the distance of the next point
+#         for pattern in search_pattern:
+#             next_point = ((point[0]+pattern[0]), (point[1]+pattern[1]), point[2]^pattern[2])
+#             if not_in_bounds(next_point) or is_occupied(next_point, wave):
+#                 continue
+#             if wave[next_point] == -1:  # If the next point has not been visited
+#                 queue.append(next_point)
+#                 wave[next_point] = wave[point] + 1  # Assign the distance of the next point
 
-    return None
+#     return None
 
 def start_search():
     # A function to start the search for all origins to all destinations
