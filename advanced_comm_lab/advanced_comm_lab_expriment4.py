@@ -1,5 +1,5 @@
 
-#####################################################################################
+######################################################################################
 # Date:         4/7/24
 # Last Update:  4/7/24
 # Course:       Advanced Communication Lab
@@ -7,7 +7,7 @@
 # Lecturer:     Irena Libster
 # Project:      Advanced Communication Lab - Experiment 4
 # Description:  Hamming(7,4) encoding and error correction on a black and white image
-#####################################################################################
+######################################################################################
 
 from PIL import Image
 import numpy as np
