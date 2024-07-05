@@ -129,9 +129,9 @@ for i in range(0, array_hamming_noise.size, 7):
     k = i * 4 // 7
     array_q3_noisy[k:k + 4] = decode_without_FEC(array_hamming_noise[i:i + 7])
 
-# Print how many errors were added in total
-flipped_bits = np.sum(array_hamming != array_hamming_noise)
-print(f'Errors added: {flipped_bits}')
+# Print how many errors were added to the image
+flipped_bits = np.sum(array_in != array_q3_noisy)
+print(f'Error Bits in Image: {flipped_bits}')
 
 # Decode the Hamming(7,4) encoding in reversed order and correct the error, assign the corrected value to the decoded array
 decoded_array = np.zeros(array.size, dtype=np.uint8)
@@ -158,7 +158,7 @@ plt.title('Original Image')
 # Plot the noisy image
 plt.subplot(1, 3, 2)  # 1 row, 3 columns, 2nd subplot
 plt.imshow(image_q3_with_noise, cmap='gray')
-plt.title(f'Errors added: {flipped_bits}')
+plt.title(f'Error Bits in Image: {flipped_bits}')
 # Plot the decoded image
 plt.subplot(1, 3, 3)  # 1 row, 3 columns, 2nd subplot
 plt.imshow(image_q3, cmap='gray')
@@ -212,9 +212,9 @@ for i in range(0, array_hamming_noise.size, 7):
     k = i * 4 // 7
     array_q3_noisy[k:k + 4] = decode_without_FEC(array_hamming_noise[i:i + 7])
 
-# Print how many errors were added in total
-flipped_bits = np.sum(array_hamming != array_hamming_noise)
-print(f'Errors added: {flipped_bits}')
+# Print how many errors were added to the image
+flipped_bits = np.sum(array_in != array_q3_noisy)
+print(f'Error Bits in Image: {flipped_bits}')
 
 # Decode the Hamming(7,4) encoding in reversed order and correct the error, assign the corrected value to the decoded array
 for i in range(array_hamming_noise.size - 7, -1, -7):
@@ -240,7 +240,7 @@ plt.title('Original Image')
 # Plot the noisy image
 plt.subplot(1, 3, 2)  # 1 row, 3 columns, 2nd subplot
 plt.imshow(image_q3_with_noise, cmap='gray')
-plt.title(f'Errors added: {flipped_bits}')
+plt.title(f'Error Bits in Image: {flipped_bits}')
 # Plot the decoded image
 plt.subplot(1, 3, 3)  # 1 row, 3 columns, 2nd subplot
 plt.imshow(image_q3, cmap='gray')
