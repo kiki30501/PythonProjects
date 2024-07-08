@@ -76,7 +76,7 @@ def plot_result(paths):
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(origins[:, 0], origins[:, 1], origins[:, 2], c='r', label='Origins')
     ax.scatter(destins[:, 0], destins[:, 1], destins[:, 2], c='g', label='Destinations')
-    colors = iter(cm.gnuplot(np.linspace(0, 1, len(paths)-1)))
+    colors = iter(cm.tab20b(np.linspace(0.0, 1.0, num_destin * num_origin)))
     for path in paths:
         if path is not None:
             path = np.array(path)
@@ -85,6 +85,10 @@ def plot_result(paths):
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
+    ax.set_xlim(-0.5, 24.5)
+    ax.set_ylim(-0.5, 24.5)
+    ax.set_xticks(range(-1, 26))
+    ax.set_yticks(range(-1, 26))
     #plt.legend()
     #ax.scatter(np.where(board == OCCUPIED)[0], np.where(board == OCCUPIED)[1], np.where(board == OCCUPIED)[2], c='k', label='Occupied')
     plt.show()
