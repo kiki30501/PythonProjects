@@ -10,6 +10,8 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import cm
+from cycler import cycler
 
 EMPTY    =  0
 OCCUPIED = -1
@@ -74,21 +76,25 @@ def plot_result(paths):
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(origins[:, 0], origins[:, 1], origins[:, 2], c='r', label='Origins')
     ax.scatter(destins[:, 0], destins[:, 1], destins[:, 2], c='g', label='Destinations')
+    colors = iter(cm.gnuplot(np.linspace(0, 1, len(paths)-1)))
     for path in paths:
         if path is not None:
             path = np.array(path)
-            ax.plot(path[:, 0], path[:, 1], path[:, 2], label='Path')
+            c = next(colors)
+            ax.plot(path[:, 0], path[:, 1], path[:, 2], color=c, label='Path')
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
     #plt.legend()
+    #ax.scatter(np.where(board == OCCUPIED)[0], np.where(board == OCCUPIED)[1], np.where(board == OCCUPIED)[2], c='k', label='Occupied')
     plt.show()
     return
+
 
 def plot_progress(distance, curr, origins):
     plt.close('all')
     plt.figure(figsize=(8,8))
-    plt.imshow(distance[:, :, 0], cmap='viridis', origin='lower')
+    plt.imshow(0.01 * distance[:, :, 0] , cmap='viridis' , origin='lower')
     plt.xlim(-0.5, 24.5)
     plt.ylim(-0.5, 24.5)
     plt.xlabel('X')
@@ -134,7 +140,7 @@ def lee_algorithm():
                 queue = np.delete(queue, 0, axis=0)
                 # check if the current point is a destination
                 if np.all(destin == curr):
-                    plot_progress(distance, curr, origins)
+                    # plot_progress(distance, curr, origins)
                     idx = np.where(destins == destin)[0][0]
                     paths[idx] = [curr]
                     while not np.all(curr == origin):
@@ -162,7 +168,7 @@ def lee_algorithm():
                         continue
                     if np.all(destin == new):
                         distance[tuple(new)] = distance[tuple(curr)] + 1
-                        board[tuple(curr)] = OCCUPIED
+                        #board[tuple(curr)] = OCCUPIED
                         queue = np.vstack((queue, new))
                         continue
                     if board[tuple(new)] == EMPTY and distance[tuple(new)] == np.inf:
