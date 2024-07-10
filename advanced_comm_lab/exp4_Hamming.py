@@ -9,11 +9,23 @@ from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+import tkinter as tk
+from tkinter import filedialog
 
 
 ######################################
 ############## Functions #############
 ######################################
+
+
+def select_file():
+    # Create a root window and hide it
+    root = tk.Tk()
+    root.withdraw()
+    
+    # Open file dialog and return the selected file path
+    file_path = filedialog.askopenfilename()
+    return file_path
 
 
 def add_noise(arr, blockSize, numErr): # Recieve an array, block size and number of errors to add
@@ -69,7 +81,8 @@ H = np.array([[1,1,0],
 ######################################
 
 # Open the image file
-image_in = Image.open('C:/Users/sixsi/Code-Projects/PythonProjects/advanced_comm_lab/low_res_star.jpg')
+image_path = select_file()
+image_in = Image.open(image_path)
 
 image_in = image_in.convert('L')                    # Convert the image to grayscale
 array_in = np.array(image_in).flatten()             # Convert the image to a 1D array
