@@ -11,7 +11,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from cycler import cycler
+
+plot_during_process = True
+num_displays = 2
 
 EMPTY    =  0
 OCCUPIED = -1
@@ -118,9 +120,11 @@ def plot_progress(distance, curr, origins):
 k=-1
 j=-1
 p=-1
+
+
 def lee_algorithm():
     global board, origins, destins, paths, k,j,p
-    
+    flag=0
     # initialize the paths list
     paths = [None] * len(destins)
     
@@ -144,7 +148,9 @@ def lee_algorithm():
                 queue = np.delete(queue, 0, axis=0)
                 # check if the current point is a destination
                 if np.all(destin == curr):
-                    # plot_progress(distance, curr, origins)
+                    if plot_during_process == True and flag <= num_displays:
+                        plot_progress(distance, curr, origins)
+                        flag+=1
                     idx = np.where(destins == destin)[0][0]
                     paths[idx] = [curr]
                     while not np.all(curr == origin):
