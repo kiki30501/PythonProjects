@@ -52,6 +52,16 @@ def decode_without_FEC(arr): # Recieve 7 bits and return 4 data bits
     return np.array([arr[0], arr[2], arr[4], arr[6]])
 
 
+
+# Define the H matrix
+H = np.array([[1,1,0],
+              [1,0,0],
+              [1,0,1],
+              [0,1,0],
+              [0,1,1],
+              [0,0,1],
+              [1,1,1]])
+
 def decode(arr):
     syndrome = np.zeros(H.shape[1])
     for i in range(0, H.shape[1]):
@@ -65,15 +75,6 @@ def decode(arr):
             break
     return np.array([arr[0], arr[2], arr[4], arr[6]])
 
-
-# Define the H matrix
-H = np.array([[1,1,0],
-              [1,0,0],
-              [1,0,1],
-              [0,1,0],
-              [0,1,1],
-              [0,0,1],
-              [1,1,1]])
 
 
 ######################################
